@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.dct.purchase.mapper.IPurchaseMapper">
+
+	<resultMap type="com.spring.dct.vo.PurchasesVO" id="purchases">
+		<id property="purchaseNo" column="PURCHASE_NO" />
+		<result property="userNo" column="USER_NO"/>
+		<result property="lectureNo" column="LECTURE_NO"/>
+		<result property="mentoringNo" column="MENTORING_NO"/>
+		<result property="purchaseCreateDate" column="PURCHASE_CREATE_DATE"/>
+		<result property="purchaseTotalPrice" column="PURCHASE_TOTAL_PRICE"/>
+	</resultMap>
+	
+	<!-- 구매내역 추가 -->
+	<!-- void addPurchase(PurchasesVO vo); -->
+	<insert id="addPurchase">
+		INSERT INTO PURCHASES
+			(PURCHASE_NO, USER_NO, LECTURE_NO, MENTORING_NO, PURCHASE_TOTAL_PRICE)
+		VALUES
+			(purchase_no_seq.NEXTVAL, #{userNo}, #{lectureNo}, #{mentoringNo}, #{purchaseTotalPrice})
+	</insert>
+	
+	<!-- 구매내역 목록 얻어오기 -->
+	<!-- List<PurchasesVO> listPurchase(int userNo); -->
+	<select id="listPurchase">
+		SELECT 
+			PURCHASE_NO as purchaseNo,
+			USER_NO as userNo,
+			LECTURE_NO as lectureNo,
+			MENTORING_NO as mentoringNo,
+			PURCHASE_CREATE_DATE as purchaseCreateDate,
+			PURCHASE_TOTAL_PRICE as purchaseTotalPrice
+		FROM 
+			PURCHASES
+		WHERE
+			USER_NO = #{userNo}
+	</select>	
+
+
+</mapper>
